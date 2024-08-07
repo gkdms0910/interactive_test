@@ -12,7 +12,7 @@
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        let scene, camera, renderer, cube;
+        let scene, camera, renderer, cube, edges;
 
         function init() {
             // 장면 생성
@@ -33,6 +33,12 @@
             cube = new THREE.Mesh(geometry, material);
             scene.add(cube);
 
+            // 큐브 윤곽선 생성
+            const edgesGeometry = new THREE.EdgesGeometry(geometry);
+            const edgesMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+            edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+            scene.add(edges);
+
             // 렌더링 시작
             animate();
         }
@@ -43,6 +49,10 @@
             // 큐브 회전
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
+
+            // 윤곽선 회전
+            edges.rotation.x = cube.rotation.x;
+            edges.rotation.y = cube.rotation.y;
 
             renderer.render(scene, camera);
         }
