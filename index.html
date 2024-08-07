@@ -29,8 +29,15 @@
 
             // 큐브 생성
             const geometry = new THREE.BoxGeometry();
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            cube = new THREE.Mesh(geometry, material);
+            const materials = [
+                new THREE.MeshBasicMaterial({ color: 0xff0000 }), // 빨간색
+                new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // 초록색
+                new THREE.MeshBasicMaterial({ color: 0x0000ff }), // 파란색
+                new THREE.MeshBasicMaterial({ color: 0xffff00 }), // 노란색
+                new THREE.MeshBasicMaterial({ color: 0xff00ff }), // 자홍색
+                new THREE.MeshBasicMaterial({ color: 0x00ffff })  // 청록색
+            ];
+            cube = new THREE.Mesh(geometry, materials);
             scene.add(cube);
 
             // 큐브 윤곽선 생성
@@ -41,18 +48,16 @@
 
             // 렌더링 시작
             animate();
+
+            // 마우스 휠 이벤트 추가
+            document.addEventListener('wheel', onMouseWheel, false);
         }
 
         function animate() {
             requestAnimationFrame(animate);
 
-            // 큐브 회전
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
             // 윤곽선 회전
-            edges.rotation.x = cube.rotation.x;
-            edges.rotation.y = cube.rotation.y;
+            edges.rotation.copy(cube.rotation);
 
             renderer.render(scene, camera);
         }
@@ -61,8 +66,16 @@
         document.addEventListener('mousemove', onMouseMove);
 
         function onMouseMove(event) {
-            cube.rotation.x = (event.clientY / window.innerHeight) * 2 * Math.PI;
-            cube.rotation.y = (event.clientX / window.innerWidth) * 2 * Math.PI;
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            cube.rotation.x = mouseY * Math.PI;
+            cube.rotation.y = mouseX * Math.PI;
+        }
+
+        // 마우스 휠로 확대/축소
+        function onMouseWheel(event) {
+            camera.position.z += event.deltaY * 0.01;
         }
 
         // 초기화 함수 호출
