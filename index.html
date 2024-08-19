@@ -5,9 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rainy Window Effect</title>
     <link rel="stylesheet" href="test.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #container {
+            position: relative;
+        }
+
+        #background {
+            max-width: 50%;
+            max-height: 50%;
+        }
+    </style>
 </head>
 <body>
-  <section>
+  <section id="container">
     <img id="background" alt="background" src="bg.jpg">
   </section>
     <script src="rainyday.js"></script>
@@ -17,6 +37,7 @@
         image.onload = function(){
           var rainyDay = new RainyDay({
             image : this,
+            blur : 100,
           })
           RainyDay.rain([
             [5, 2, 2]
