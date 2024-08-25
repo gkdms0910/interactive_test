@@ -3,44 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rainy Window Effect</title>
-    <link rel="stylesheet" href="test.css">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    <title>Image Zoom with Rain Effect</title>
+    <link rel="stylesheet" href="test3.css">
 
-        #background {
-            width: 300px; /* 이미지의 가로 크기 */
-            height: auto; /* 비율에 맞게 자동 조정 */
-        }
-    </style>
 </head>
 <body>
-    <img id="background" alt="background" src="bg.jpg">
-    
+    <canvas id="rain-canvas"></canvas>
+    <div class="container" id="container">
+        <img src="bg.jpg" alt="Background Image" class="image" id="image">
+        <div class="text-box" id="text-box">
+            <h1>Image Description</h1>
+            <p>This is the description of the image. It appears when the image is clicked and zoomed in.</p>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Rainyday.js 라이브러리 추가 -->
     <script src="rainyday.js"></script>
-    <script>
-      function rain(){
-        const image = document.getElementById('background');
-        image.onload = function(){
-          var rainyDay = new RainyDay({
-            image : this,
-            blur : 100,
-          })
-          RainyDay.rain([
-            [5, 2, 2]
-          ], 0)
-        }
-        image.src = 'bg.jpg';
-      }
-      rain();
-    </script>
+    <script src="test3.js"></script>
 </body>
 </html>
+
